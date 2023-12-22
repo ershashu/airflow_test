@@ -41,7 +41,7 @@ dag = DAG(
     'user01_ezpresto',
     default_args=default_args,
     description='How to use the Python Operator?',
-    schedule_interval='@hourly',
+    schedule_interval=None,
     tags=['ezaf', 'ezpresto'],
     render_template_as_native_obj=True,
     access_control={
