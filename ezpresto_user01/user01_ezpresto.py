@@ -12,7 +12,6 @@ def airflow_test():
     print("airflow")
     # print("Python task decorator query: %s", str(kwargs["templates_dict"]["query"]))
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-    print("Host name: {}".format(DagRun.conf['ezua_domain']))
     keycloak_url = "https://keycloak.hpe-qa9-ezaf.com/realms/UA/protocol/openid-connect/token"
     payload = 'username=hpedemo-user01&password=Hpepoc@123&grant_type=password&client_id=ua-grant'
     keycloak_headers = {'Content-Type': 'application/x-www-form-urlencoded'}
