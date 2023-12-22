@@ -1,8 +1,12 @@
-from datetime import datetime
-
 from airflow import DAG
-from airflow.decorators import task
-from airflow.operators.bash import BashOperator
+from airflow.models.param import Param
+from airflow.operators.python import (
+    ExternalPythonOperator,
+    PythonOperator,
+    PythonVirtualenvOperator,
+    is_venv_installed,
+)
+from airflow.utils.dates import days_ago
 import requests
 import json
 import urllib3
