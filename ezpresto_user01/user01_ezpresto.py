@@ -43,6 +43,14 @@ dag = DAG(
     description='How to use the Python Operator?',
     schedule_interval='@hourly',
     tags=['ezaf', 'ezpresto'],
+    render_template_as_native_obj=True,
+    access_control={
+        'All': {
+            'can_read',
+            'can_edit',
+            'can_delete'
+        }
+    }
 )
 
 # define the first task
