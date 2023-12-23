@@ -1,0 +1,68 @@
+apiVersion: sparkoperator.hpe.com/v1beta2
+kind: ScheduledSparkApplication
+metadata:
+  creationTimestamp: 2023-12-22T04:42:03Z
+  generation: 1
+  name: user01-spark-schedule
+  namespace: hpedemo-user01
+  resourceVersion: "2820956"
+  uid: b6757b5d-fb68-4f3a-8eda-07e2846d76fd
+spec:
+  concurrencyPolicy: Allow
+  failedRunHistoryLimit: 240
+  schedule: "@every 1h"
+  successfulRunHistoryLimit: 240
+  template:
+    driver:
+      labels:
+        version: 3.4.1
+      serviceAccount: hpe-hpedemo-user01
+      volumeMounts:
+        - mountPath: /mounts/hpedemo-user01-volume
+          name: hpedemo-user01-volume
+        - mountPath: /mounts/shared-volume
+          name: shared-volume
+        - mountPath: /opt/mapr/spark/sparkhs-eventlog-storage
+          name: sparkhs-eventlog-storage
+    executor:
+      labels:
+        version: 3.4.1
+      volumeMounts:
+        - mountPath: /mounts/hpedemo-user01-volume
+          name: hpedemo-user01-volume
+        - mountPath: /mounts/shared-volume
+          name: shared-volume
+    image: marketplace.us1.greenlake-hpe.com/ezmeral/gcr.io/mapr-252711/spark-py-3.4.1:v3.4.1
+    imagePullPolicy: Always
+    imagePullSecrets:
+      - imagepull
+    mainApplicationFile: local:///mounts/shared-volume/spark/spark_mysql.py
+    mode: cluster
+    restartPolicy:
+      type: Never
+    sparkConf:
+      spark.eventLog.dir: file:///opt/mapr/spark/sparkhs-eventlog-storage
+      spark.eventLog.enabled: "true"
+      spark.executorEnv.PRESTO_ACCESS_TOKEN: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJHZm91YjdiZnpTUk5Lb3E3bnBtemFiTTR2aWZZaU5ZWGl1ellySmJULXVNIn0.eyJleHAiOjE3MDM4MjIyNjUsImlhdCI6MTcwMzIxNzQ2NSwiYXV0aF90aW1lIjoxNzAzMjE3NDY1LCJqdGkiOiI2ZmJlYjUwNi04OWFjLTRhYjItOWU2MC1iMzRkZmI2ODVkOWYiLCJpc3MiOiJodHRwczovL2tleWNsb2FrLmhwZS1xYTktZXphZi5jb20vcmVhbG1zL1VBIiwiYXVkIjoidWEiLCJzdWIiOiIwYzlmMTRiZC1kNTY0LTRiOWYtODQ5My01MzdiOGQ1ZWYxMDgiLCJ0eXAiOiJJRCIsImF6cCI6InVhIiwibm9uY2UiOiJMeXZsWXJoeGVZRjdSNXdXMVBxSlFOQTZ1WXBZeUtib0M0Ri1SQ2JZOWtrIiwic2Vzc2lvbl9zdGF0ZSI6IjQ4YWJmOTMxLTZlMGItNGU2Yy05MWM1LTFkNWJjNjlmM2VlMiIsImF0X2hhc2giOiItQUFtQXQzNWp5bnhac3FpNm5RZ1FRIiwiYWNyIjoiMSIsInNpZCI6IjQ4YWJmOTMxLTZlMGItNGU2Yy05MWM1LTFkNWJjNjlmM2VlMiIsInVpZCI6IjYwMDAiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImdpZCI6IjUwMDUiLCJuYW1lIjoiaHBlZGVtbyB1c2VyMDEiLCJncm91cHMiOlsidWEtZW5hYmxlZCIsIm9mZmxpbmVfYWNjZXNzIiwiYWRtaW4iLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtdWEiXSwicHJlZmVycmVkX3VzZXJuYW1lIjoiaHBlZGVtby11c2VyMDEiLCJnaXZlbl9uYW1lIjoiaHBlZGVtbyIsInBvc2l4X3VzZXJuYW1lIjoiaHBlZGVtby11c2VyMDEiLCJmYW1pbHlfbmFtZSI6InVzZXIwMSIsImVtYWlsIjoiaHBlZGVtb191c2VyMDFAaHBlLmNvbSJ9.gbrFSsOF4bhXYbcMt-qARIlHVsRBfDUehug4S46tnWuvXaVaRH2Vn_MVGyD8K11XOXL3SFXEcbM0Pr_yHHK_xR91t5eu9Twj32-8YDZ_7thucL7P3yoys_Zman7Y2eeIyWsEI3ov1W_B-yhAokR-TJ1zWBQguTeATrxK33YVIwo48O10s1WgXFzfGT34IXZNVKXe2vU20tEJEMbymhDmZpw6Wp8B-dr3E9NqBvvrCVEudS8XcU1WdrNZNzhy1NQFVN7KnPwXt2QRwyAv7-WFE5PG34Ecj8IRkWGVVzhoNyCR3V1irYkc2GDoFFhDMPoVV_22ItctpZIrHx0MCz3Yrg
+      spark.executorEnv.SPARK_USER: hpedemo-user01
+      spark.kubernetes.driverEnv.PRESTO_ACCESS_TOKEN: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJHZm91YjdiZnpTUk5Lb3E3bnBtemFiTTR2aWZZaU5ZWGl1ellySmJULXVNIn0.eyJleHAiOjE3MDM4MjIyNjUsImlhdCI6MTcwMzIxNzQ2NSwiYXV0aF90aW1lIjoxNzAzMjE3NDY1LCJqdGkiOiI2ZmJlYjUwNi04OWFjLTRhYjItOWU2MC1iMzRkZmI2ODVkOWYiLCJpc3MiOiJodHRwczovL2tleWNsb2FrLmhwZS1xYTktZXphZi5jb20vcmVhbG1zL1VBIiwiYXVkIjoidWEiLCJzdWIiOiIwYzlmMTRiZC1kNTY0LTRiOWYtODQ5My01MzdiOGQ1ZWYxMDgiLCJ0eXAiOiJJRCIsImF6cCI6InVhIiwibm9uY2UiOiJMeXZsWXJoeGVZRjdSNXdXMVBxSlFOQTZ1WXBZeUtib0M0Ri1SQ2JZOWtrIiwic2Vzc2lvbl9zdGF0ZSI6IjQ4YWJmOTMxLTZlMGItNGU2Yy05MWM1LTFkNWJjNjlmM2VlMiIsImF0X2hhc2giOiItQUFtQXQzNWp5bnhac3FpNm5RZ1FRIiwiYWNyIjoiMSIsInNpZCI6IjQ4YWJmOTMxLTZlMGItNGU2Yy05MWM1LTFkNWJjNjlmM2VlMiIsInVpZCI6IjYwMDAiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImdpZCI6IjUwMDUiLCJuYW1lIjoiaHBlZGVtbyB1c2VyMDEiLCJncm91cHMiOlsidWEtZW5hYmxlZCIsIm9mZmxpbmVfYWNjZXNzIiwiYWRtaW4iLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtdWEiXSwicHJlZmVycmVkX3VzZXJuYW1lIjoiaHBlZGVtby11c2VyMDEiLCJnaXZlbl9uYW1lIjoiaHBlZGVtbyIsInBvc2l4X3VzZXJuYW1lIjoiaHBlZGVtby11c2VyMDEiLCJmYW1pbHlfbmFtZSI6InVzZXIwMSIsImVtYWlsIjoiaHBlZGVtb191c2VyMDFAaHBlLmNvbSJ9.gbrFSsOF4bhXYbcMt-qARIlHVsRBfDUehug4S46tnWuvXaVaRH2Vn_MVGyD8K11XOXL3SFXEcbM0Pr_yHHK_xR91t5eu9Twj32-8YDZ_7thucL7P3yoys_Zman7Y2eeIyWsEI3ov1W_B-yhAokR-TJ1zWBQguTeATrxK33YVIwo48O10s1WgXFzfGT34IXZNVKXe2vU20tEJEMbymhDmZpw6Wp8B-dr3E9NqBvvrCVEudS8XcU1WdrNZNzhy1NQFVN7KnPwXt2QRwyAv7-WFE5PG34Ecj8IRkWGVVzhoNyCR3V1irYkc2GDoFFhDMPoVV_22ItctpZIrHx0MCz3Yrg
+      spark.kubernetes.driverEnv.SPARK_USER: hpedemo-user01
+      spark.mapr.scheduled: "true"
+      spark.mapr.user.secret: hpe-autotix-generated-secret-nwqvvm
+      spark.mapr.user.secret.autogen: "true"
+    sparkVersion: 3.4.1
+    type: Python
+    volumes:
+      - name: hpedemo-user01-volume
+        persistentVolumeClaim:
+          claimName: user-pvc
+      - name: shared-volume
+        persistentVolumeClaim:
+          claimName: kubeflow-shared-pvc
+      - name: sparkhs-eventlog-storage
+        persistentVolumeClaim:
+          claimName: hpedemo-user01-sparkhs-pvc
+status:
+  lastRun: null
+  nextRun: 2023-12-22T05:42:04Z
+  scheduleState: Scheduled
