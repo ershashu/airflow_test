@@ -40,7 +40,7 @@ def execute_query():
     ezpresto_payload = json.dumps({"query": "select * from mysql.tpch_partitioned_orc_2.region"})
     ezpresto_headers = {'Content-Type': 'application/json', 'Authorization': access_token}
     print("EZPresto WebService URL: {}".format(ezpresto_url))
-    response = requests.request("POST", ezpresto_url, headers=ezpresto_payload, data=ezpresto_headers, verify=False)
+    response = requests.request("POST", ezpresto_url, headers=ezpresto_headers, data=ezpresto_payload, verify=False)
     print("Query Output: {}".format(response.status_code))
     
 
