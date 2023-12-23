@@ -30,7 +30,7 @@ def airflow_test():
     payload = 'username=hpedemo-user01&password=Hpepoc@123&grant_type=password&client_id=ua-grant'
     keycloak_headers = {'Content-Type': 'application/x-www-form-urlencoded'}
     print("Keycloak URL: {}".format(keycloak_url))
-    response = requests.request("POST", keycloak_url, headers=keycloak_headers, data=payload)
+    response = requests.request("POST", keycloak_url, headers=keycloak_headers, data=payload, verify=False)
     print("Create Token API Response code: {}".format(response.status_code))
     print(response.json())
     access_token = response.json()['access_token']
