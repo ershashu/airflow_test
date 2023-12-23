@@ -46,7 +46,7 @@ def execute_query():
 
 # define the DAG
 dag = DAG(
-    'user01_ezpresto',
+    'user10_ezpresto',
     default_args=default_args,
     description='User01 Query',
     schedule_interval='@hourly',

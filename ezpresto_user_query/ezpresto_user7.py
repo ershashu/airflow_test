@@ -27,7 +27,7 @@ def execute_query():
     # print("Python task decorator query: %s", str(kwargs["templates_dict"]["query"]))
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     keycloak_url = "https://keycloak.hpe-qa9-ezaf.com/realms/UA/protocol/openid-connect/token"
-    keycloak_payload = 'username=hpedemo-user02&password=Hpepoc@123&grant_type=password&client_id=ua-grant'
+    keycloak_payload = 'username=hpedemo-user07&password=Hpepoc@123&grant_type=password&client_id=ua-grant'
     keycloak_headers = {'Content-Type': 'application/x-www-form-urlencoded'}
     print("Keycloak URL: {}".format(keycloak_url))
     response = requests.request("POST", keycloak_url, headers=keycloak_headers, data=keycloak_payload, verify=False)
@@ -37,7 +37,7 @@ def execute_query():
     print(access_token)
     access_token = 'Bearer '+access_token
     ezpresto_url = "http://ezpresto-webservice.ezpresto.svc.cluster.local:8888/api/v1/ezsql"
-    ezpresto_payload = json.dumps({"query": "select * from mysql.tpch_partitioned_orc_2.customer"})
+    ezpresto_payload = json.dumps({"query": "select * from mysql.tpcds_partitioned_orc_2.call_center"})
     ezpresto_headers = {'Content-Type': 'application/json', 'Authorization': access_token}
     print("EZPresto WebService URL: {}".format(ezpresto_url))
     response = requests.request("POST", ezpresto_url, headers=ezpresto_headers, data=ezpresto_payload, verify=False)
@@ -46,7 +46,7 @@ def execute_query():
 
 # define the DAG
 dag = DAG(
-    'user01_ezpresto',
+    'user07_ezpresto',
     default_args=default_args,
     description='User01 Query',
     schedule_interval='@hourly',
