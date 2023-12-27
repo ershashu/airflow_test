@@ -52,6 +52,7 @@ dag = DAG(
     schedule_interval='@hourly',
     tags=['ezaf', 'ezpresto'],
     render_template_as_native_obj=True,
+    catchup=False,
     access_control={
         'All': {
             'can_read',
