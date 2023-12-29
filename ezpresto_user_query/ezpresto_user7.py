@@ -10,6 +10,8 @@ from airflow.utils.dates import days_ago
 import requests
 import json
 import urllib3
+import time
+from airflow.exceptions import AirflowFailException
 
 default_args = {
     'owner': 'airflow',
@@ -42,7 +44,10 @@ def execute_query():
     print("EZPresto WebService URL: {}".format(ezpresto_url))
     response = requests.request("POST", ezpresto_url, headers=ezpresto_headers, data=ezpresto_payload, verify=False)
     print("Run Query Response Code: {}".format(response.status_code))
-    
+    print('Sleeping for 2 minute')
+    time.sleep(120)
+    if response.status_code != 202:
+        raise AirflowFailException("Query Status Code Mismatch")
 
 # define the DAG
 dag = DAG(
