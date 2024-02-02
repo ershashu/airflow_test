@@ -9,9 +9,6 @@ from airflow.providers.cncf.kubernetes.sensors.spark_kubernetes import (
 from airflow.providers.cncf.kubernetes.operators.pod import (
     KubernetesPodOperator,
 )
-from airflow.providers.cncf.kubernetes.sensors.pod import (
-    KubernetesPodSensor,
-)
 from airflow.utils.dates import days_ago
 
 default_args = {
@@ -90,13 +87,5 @@ upload_query_result_to_s3 = KubernetesPodOperator(
     enable_impersonation_from_ldap_user=True,
 )
 
-sensor_upload_query_result_to_s3 = KubernetesPodSensor(
-    task_id="sensor_upload_query_result_to_s3_via_spark",
-    application_name="{{ task_instance.xcom_pull(task_ids='upload_query_result_to_s3')['metadata']['name'] }}",
-    dag=dag,
-    api_group="sparkoperator.hpe.com",
-    attach_log=True,
-)
 
-
-run_ezpresto_query_via_spark >> sensor_for_run_query_via_spark >> upload_query_result_to_s3 >> sensor_upload_query_result_to_s3
+run_ezpresto_query_via_spark >> sensor_for_run_query_via_spark >> upload_query_result_to_s3
