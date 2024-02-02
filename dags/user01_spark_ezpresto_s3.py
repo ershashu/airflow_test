@@ -83,8 +83,7 @@ upload_query_result_to_s3 = KubernetesPodOperator(
     arguments=["echo", "10"],
     labels={"foo": "bar"},    
     do_xcom_push=True,
-    dag=dag,
-    enable_impersonation_from_ldap_user=True,
+    dag=dag
 )
 
 
