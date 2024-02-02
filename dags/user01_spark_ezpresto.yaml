@@ -1,7 +1,7 @@
 apiVersion: sparkoperator.hpe.com/v1beta2
 kind: SparkApplication
 metadata:
-  name: spark-ezpresto
+  name: spark-ezpresto-{{ts_nodash|replace("T", "")}}
 spec:
   type: Python
   sparkVersion: 3.5.0
@@ -19,11 +19,6 @@ spec:
     memory: 1024m
     labels:
       version: 3.5.0
-    volumeMounts:
-      - name: '{{dag_run.conf.get("username", "")}}-volume'
-        mountPath: /mounts/{{dag_run.conf.get("username", "")}}-volume
-      - name: shared-volume
-        mountPath: /mounts/shared-volume
   executor:
     cores: 1
     coreLimit: 1000m
@@ -31,15 +26,3 @@ spec:
     memory: 2G
     labels:
       version: 3.5.0
-    volumeMounts:
-      - name: '{{dag_run.conf.get("username", "")}}-volume'
-        mountPath: /mounts/{{dag_run.conf.get("username", "")}}-volume
-      - name: shared-volume
-        mountPath: /mounts/shared-volume
-  volumes:
-    - name: '{{dag_run.conf.get("username", "")}}-volume'
-      persistentVolumeClaim:
-        claimName: user-pvc
-    - name: shared-volume
-      persistentVolumeClaim:
-        claimName: kubeflow-shared-pvc

@@ -29,7 +29,7 @@ dag = DAG(
     tags=["e2e example", "ezaf", "spark", "ezpresto", "local-s3"],
     params={
         "username": Param(
-            "user01",
+            "hpedemo-user01",
             type="string",
             description="username",
         ),
@@ -52,6 +52,9 @@ dag = DAG(
             type=["null", "string"],
             pattern=r"^$|^\S+/$",
             description="Airgap registry url. Trailing slash in the end is required",
+        ),
+        "notebook_image": Param(
+            "gcr.io/mapr-252711/kubeflow/notebooks/jupyter-tensorflow-full:ezaf-fy24-q1-r5", type="string", description="Notebook Image to use for upload operation"
         ),
     },
     render_template_as_native_obj=True,
@@ -77,8 +80,9 @@ sensor_for_run_query_via_spark = SparkKubernetesSensor(
 
 upload_query_result_to_s3 = KubernetesPodOperator(
     task_id="upload_query_result_to_s3",
+    provide_context=True,
     name="hello-dry-run",
-    image="{{dag_run.conf.get('airgap_registry_url', '')}}gcr.io/mapr-252711/kubeflow/notebooks/jupyter-tensorflow-full:ezaf-fy24-q1-r5",
+    image='{{ params.airgap_registry_url }}{{ params.notebook_image }}',
     cmds=["bash", "-cx"],
     arguments=["echo", "10"],
     labels={"foo": "bar"},    
