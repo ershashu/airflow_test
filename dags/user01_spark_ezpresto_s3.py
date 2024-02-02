@@ -80,7 +80,6 @@ sensor_for_run_query_via_spark = SparkKubernetesSensor(
 
 upload_query_result_to_s3 = KubernetesPodOperator(
     task_id="upload_query_result_to_s3",
-    provide_context=True,
     name="hello-dry-run",
     image='{{ params.airgap_registry_url }}{{ params.notebook_image }}',
     cmds=["bash", "-cx"],
