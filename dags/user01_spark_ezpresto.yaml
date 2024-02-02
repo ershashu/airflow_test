@@ -8,7 +8,7 @@ spec:
   mode: cluster
   image: '{{dag_run.conf.get("airgap_registry_url", "")}}gcr.io/mapr-252711/spark-py-3.5.0:v3.5.0'
   imagePullPolicy: Always
-  mainApplicationFile: local:///mounts/{{dag_run.conf.get("username", "")}}-volume/spark_test_data/ezpresto_query.py
+  mainApplicationFile: 'local:///mnt/user/spark_test_data/ezpresto_query.py'
   restartPolicy:
     type: Never
   imagePullSecrets:
