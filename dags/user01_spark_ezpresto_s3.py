@@ -45,10 +45,10 @@ dag = DAG(
             "ezaf-presto", type="string", description="S3 bucket to push csv data from"
         ),
         "query": Param(
-            "query", type="string", description="EzPresto Query "
+            "select * from mysql.tpch_partitioned_orc_2.nation", type="string", description="EzPresto Query "
         ),
         "airgap_registry_url": Param(
-            "",
+            "lr1-bd-harbor-registry.mip.storage.hpecorp.net/ezua/",
             type=["null", "string"],
             pattern=r"^$|^\S+/$",
             description="Airgap registry url. Trailing slash in the end is required",
