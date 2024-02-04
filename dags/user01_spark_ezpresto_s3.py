@@ -45,7 +45,7 @@ dag = DAG(
             "ezaf-presto", type="string", description="S3 bucket to push csv data from"
         ),
         "query": Param(
-            "select * from mysql.tpch_partitioned_orc_2.nation", type="string", description="EzPresto Query "
+            "select \* from mysql.tpch_partitioned_orc_2.nation", type="string", description="EzPresto Query "
         ),
         "airgap_registry_url": Param(
             "lr1-bd-harbor-registry.mip.storage.hpecorp.net/ezua/",
