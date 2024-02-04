@@ -33,17 +33,6 @@ dag = DAG(
             type="string",
             description="username",
         ),
-        "s3_endpoint": Param(
-            "local-s3-service.ezdata-system.svc.cluster.local:30000",
-            type="string",
-            description="S3 endpoint to push data",
-        ),
-        "s3_endpoint_ssl_enabled": Param(
-            False, type="boolean", description="Whether to use SSL for S3 endpoint"
-        ),
-        "s3_bucket": Param(
-            "ezaf-presto", type="string", description="S3 bucket to push csv data from"
-        ),
         "query": Param(
             "select \* from mysql.tpch_partitioned_orc_2.nation", type="string", description="EzPresto Query "
         ),
@@ -52,10 +41,7 @@ dag = DAG(
             type=["null", "string"],
             pattern=r"^$|^\S+/$",
             description="Airgap registry url. Trailing slash in the end is required",
-        ),
-        "notebook_image": Param(
-            "gcr.io/mapr-252711/kubeflow/notebooks/jupyter-tensorflow-full:ezaf-fy24-q1-r5", type="string", description="Notebook Image to use for upload operation"
-        ),
+        )
     },
     render_template_as_native_obj=True,
     access_control={"All": {"can_read", "can_edit", "can_delete"}},
@@ -78,15 +64,4 @@ sensor_for_run_query_via_spark = SparkKubernetesSensor(
     attach_log=True,
 )
 
-upload_query_result_to_s3 = KubernetesPodOperator(
-    task_id="upload_query_result_to_s3",
-    name="hello-dry-run",
-    image='{{ params.airgap_registry_url }}{{ params.notebook_image }}',
-    cmds=["sh", "-c", "ls"],
-    labels={"foo": "bar"},    
-    do_xcom_push=True,
-    dag=dag
-)
-
-
-run_ezpresto_query_via_spark >> sensor_for_run_query_via_spark >> upload_query_result_to_s3
+run_ezpresto_query_via_spark >> sensor_for_run_query_via_spark
