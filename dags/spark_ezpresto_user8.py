@@ -23,18 +23,19 @@ default_args = {
 }
 
 dag = DAG(
-    "user01_spark_ezpresto_s3",
+    "spark_ezpresto_user08",
     default_args=default_args,
-    schedule_interval=None,
+    schedule_interval='*/15 * * * *',
+    catchup=False,
     tags=["e2e example", "ezaf", "spark", "ezpresto", "local-s3"],
     params={
         "username": Param(
-            "hpedemo-user01",
+            "hpedemo-user08",
             type="string",
             description="username",
         ),
         "query": Param(
-            "select \* from mysql.tpch_partitioned_orc_2.nation", type="string", description="EzPresto Query "
+            "select \* from mysql.tpcds_partitioned_orc_2.web_site limit 500", type="string", description="EzPresto Query "
         ),
         "airgap_registry_url": Param(
             "lr1-bd-harbor-registry.mip.storage.hpecorp.net/ezua/",
@@ -49,7 +50,7 @@ dag = DAG(
 
 run_ezpresto_query_via_spark = SparkKubernetesOperator(
     task_id="run_ezpresto_query_via_spark",
-    application_file="user01_spark_ezpresto.yaml",
+    application_file="spark_ezpresto_user08.yaml",
     do_xcom_push=True,
     dag=dag,
     api_group="sparkoperator.hpe.com",

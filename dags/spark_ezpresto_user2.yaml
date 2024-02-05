@@ -1,0 +1,30 @@
+apiVersion: sparkoperator.hpe.com/v1beta2
+kind: SparkApplication
+metadata:
+  name: spark-ezpresto-{{ts_nodash|replace("T", "")}}
+spec:
+  type: Python
+  sparkVersion: 3.5.0
+  mode: cluster
+  image: '{{dag_run.conf.get("airgap_registry_url", "")}}gcr.io/mapr-252711/spark-py-3.5.0:v3.5.0'
+  imagePullPolicy: Always
+  mainApplicationFile: 'local:///mnt/user/spark_test_data/ezpresto_query.py'
+  arguments:
+    - '{{dag_run.conf.get("query", "")}}'
+  restartPolicy:
+    type: Never
+  imagePullSecrets:
+    - imagepull
+  driver:
+    cores: 1
+    coreLimit: 1000m
+    memory: 1024m
+    labels:
+      version: 3.5.0
+  executor:
+    cores: 1
+    coreLimit: 1000m
+    instances: 1
+    memory: 2G
+    labels:
+      version: 3.5.0
