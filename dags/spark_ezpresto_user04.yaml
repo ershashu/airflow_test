@@ -8,7 +8,7 @@ spec:
   mode: cluster
   image: '{{ params.airgap_registry_url }}gcr.io/mapr-252711/spark-py-3.5.0:v3.5.0'
   imagePullPolicy: Always
-  mainApplicationFile: 'local:///mnt/user/spark_test_data/ezpresto_query.py'
+  mainApplicationFile: 'local:///mnt/shared/spark_test_data/ezpresto_query.py'
   timeToLiveSeconds: 86400
   arguments:
     - '{{ params.query }}'
