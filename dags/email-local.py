@@ -1,5 +1,6 @@
 from datetime import datetime
 from airflow import DAG
+from airflow.models.param import Param
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from smtplib import SMTP
