@@ -15,16 +15,17 @@ def my_email_func():
     smtp.set_debuglevel(10)
     smtpServer = context["params"]["smtp_server"]
     smtpPort = context["params"]["smtp_port"]
-    smtpUser = ""
-    smtpPass = ""
+    smtpUser = context["params"]["smtp_user"]
+    smtpPass = context["params"]["smtp_password"]
     from_addr = context["params"]["from_address"]
     to_addr   = context["params"]["to_address"]
     
     smtp.connect(smtpServer, smtpPort)
+    # Uncomment below if SMTP requires authentication
     #smtp.login(smtpUser, smtpPass)
 
-    #from_addr = "Sender Name <info@example.com>"
-    #to_addr = "recipient@example.com"
+    from_addr = "Sender Name <info@example.com>"
+    to_addr = "recipient@example.com"
 
     subj = "hello"
     date = datetime.now().strftime("%d/%m/%Y %H:%M")
@@ -49,12 +50,12 @@ dag = DAG('send_email_test',
           default_args=default_args, catchup=False,
           params={
             "smtp_server": Param(
-                "smtp-server",
+                "smtp.its.hpecorp.net",
                 type="string",
                 description="username",
             ),
             "smtp_port": Param(
-                "587", type="string", description="SMTP Server Port "
+                "25", type="string", description="SMTP Server Port "
             ),
             "smtp_user": Param(
                 "smtp-username", type=["string"], description="SMTP Username",
@@ -63,10 +64,10 @@ dag = DAG('send_email_test',
                 "smtp-password", type=["string"], description="SMTP Password",
             ),
             "from_address": Param(
-                "from@smtp.com", type=["string"], description="SMTP From Server",
+                "shailesh.jadhav@hpe.com", type=["string"], description="SMTP From Server",
             ),
             "to_address": Param(
-                "to@smtp.com", type=["string"], description="SMTP To Server",
+                "shailesh.jadhav@hpe.com", type=["string"], description="SMTP To Server",
             )
          },
     access_control={"All": {"can_read", "can_edit", "can_delete"}},
