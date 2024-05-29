@@ -15,13 +15,13 @@ def my_email_func():
     smtp.set_debuglevel(10)
     smtpServer = context["params"]["smtp_server"]
     smtpPort = context["params"]["smtp_port"]
-    smtpUser = context["params"]["smtp_user"]
-    smtpPass = context["params"]["smtp_password"]
+    smtpUser = ""
+    smtpPass = ""
     from_addr = context["params"]["from_address"]
     to_addr   = context["params"]["to_address"]
     
     smtp.connect(smtpServer, smtpPort)
-    smtp.login(smtpUser, smtpPass)
+    #smtp.login(smtpUser, smtpPass)
 
     #from_addr = "Sender Name <info@example.com>"
     #to_addr = "recipient@example.com"
