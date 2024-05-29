@@ -24,8 +24,8 @@ def my_email_func():
     # Uncomment below if SMTP requires authentication
     #smtp.login(smtpUser, smtpPass)
 
-    from_addr = "Sender Name <info@example.com>"
-    to_addr = "recipient@example.com"
+    #from_addr = "Sender Name <info@example.com>"
+    #to_addr = "recipient@example.com"
 
     subj = "hello"
     date = datetime.now().strftime("%d/%m/%Y %H:%M")
