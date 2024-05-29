@@ -18,7 +18,7 @@ def my_email_func():
     smtpUser = context["params"]["smtp_user"]
     smtpPass = context["params"]["smtp_password"]
     from_addr = context["params"]["from_address"]
-    to_addr   = fromcontext["params"]["to_address"]
+    to_addr   = context["params"]["to_address"]
     
     smtp.connect(smtpServer, smtpPort)
     smtp.login(smtpUser, smtpPass)
