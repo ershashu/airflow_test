@@ -53,7 +53,6 @@ run_ezpresto_query_via_spark = SparkKubernetesOperator(
     application_file="spark_ezpresto_user02.yaml",
     do_xcom_push=True,
     dag=dag,
-    api_group="sparkoperator.hpe.com",
     enable_impersonation_from_ldap_user=True,
 )
 
