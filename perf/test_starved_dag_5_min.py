@@ -23,7 +23,14 @@ with DAG(
             'sleep': Param(120, type="integer", minimum=0),
         },
         render_template_as_native_obj=True,
-        max_active_tasks=1024
+        max_active_tasks=1024,
+        access_control={
+        'All': {
+            'can_read',
+            'can_edit',
+            'can_delete'
+        }
+    	}
 ) as dag:
     @task
     def get_count_test():
