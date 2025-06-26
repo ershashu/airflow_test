@@ -13,7 +13,7 @@ args = {
 }
 
 with DAG(
-    dag_id='example_parallel_tasks',
+    dag_id='example_parallel_tasks_with_interval',
     default_args=args,
 	schedule_interval='*/5 * * * *',
     tags=['example', 'performance_benchmarking', 'parallel_tasks'],
