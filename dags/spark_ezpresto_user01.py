@@ -3,12 +3,6 @@ from airflow.models.param import Param
 from airflow.providers.cncf.kubernetes.operators.spark_kubernetes import (
     SparkKubernetesOperator,
 )
-from airflow.providers.cncf.kubernetes.sensors.spark_kubernetes import (
-    SparkKubernetesSensor,
-)
-from airflow.providers.cncf.kubernetes.operators.pod import (
-    KubernetesPodOperator,
-)
 from airflow.utils.dates import days_ago
 
 default_args = {
@@ -51,17 +45,8 @@ dag = DAG(
 run_ezpresto_query_via_spark = SparkKubernetesOperator(
     task_id="run_ezpresto_query_via_spark",
     application_file="spark_ezpresto_user01.yaml",
-    do_xcom_push=True,
     dag=dag,
     enable_impersonation_from_ldap_user=True,
 )
 
-sensor_for_run_query_via_spark = SparkKubernetesSensor(
-    task_id="sensor_for_run_query_via_spark",
-    application_name="{{ task_instance.xcom_pull(task_ids='run_ezpresto_query_via_spark')['metadata']['name'] }}",
-    dag=dag,
-    api_group="sparkoperator.hpe.com",
-    attach_log=True,
-)
-
-run_ezpresto_query_via_spark >> sensor_for_run_query_via_spark
+run_ezpresto_query_via_spark
