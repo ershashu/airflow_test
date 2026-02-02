@@ -21,7 +21,7 @@ with DAG(
     start_date=datetime(2024, 1, 1),
     schedule=None, 
     catchup=False,
-    access_control={"All": {"can_read", "can_edit"}},
+    access_control={"All": {"can_read"}},
 ) as dag:
 
     ca_cert_test = PythonOperator(
