@@ -1,16 +1,14 @@
-from datetime import timedelta
-
 from airflow import DAG
 from airflow.operators.bash import BashOperator
-from airflow.utils.dates import days_ago
 from airflow.models.param import Param
 from airflow.decorators import task
 from airflow.operators.python import get_current_context
+from datetime import datetime, timedelta
 import time
 
 args = {
     'owner': 'airflow',
-    'start_date': days_ago(2),
+    'start_date': datetime.now() - timedelta(days=1),
 }
 
 with DAG(
