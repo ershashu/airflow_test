@@ -14,7 +14,7 @@ args = {
 with DAG(
         dag_id='starving_dag',
         default_args=args,
-        schedule_interval=None,
+        schedule=None,
         catchup=False,
         tags=['example', 'performance_benchmarking', 'parallel_tasks'],
         params={

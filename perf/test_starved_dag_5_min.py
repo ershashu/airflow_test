@@ -1,21 +1,20 @@
 from airflow import DAG
 from airflow.operators.bash import BashOperator
-from airflow.utils.dates import days_ago
 from airflow.models.param import Param
 from airflow.decorators import task
 from airflow.operators.python import get_current_context
-from datetime import timedelta
+from datetime import datetime, timedelta
 import time
 
 args = {
     'owner': 'airflow',
-    'start_date': days_ago(0),
+    'start_date': datetime.now() - timedelta(days=1),
 }
 
 with DAG(
         dag_id='starving_dag_interval',
         default_args=args,
-        schedule_interval='*/5 * * * *',
+        schedule="*/5 * * * *",
         catchup=False,
         tags=['example', 'performance_benchmarking', 'parallel_tasks'],
         params={

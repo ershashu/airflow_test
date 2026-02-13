@@ -1,6 +1,5 @@
 from airflow import DAG
 from airflow.operators.bash import BashOperator
-from airflow.utils.dates import days_ago
 from airflow.models.param import Param
 from airflow.decorators import task
 from airflow.operators.python import get_current_context
@@ -15,7 +14,7 @@ args = {
 with DAG(
     dag_id='example_parallel_tasks',
     default_args=args,
-    schedule_interval=None,
+    schedule=None,
     tags=['example', 'performance_benchmarking', 'parallel_tasks'],
     params={
         'count': Param(30, type="integer", minimum=0),
