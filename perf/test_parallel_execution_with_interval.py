@@ -15,7 +15,7 @@ args = {
 with DAG(
     dag_id='example_parallel_tasks_with_interval',
     default_args=args,
-	schedule='*/5 * * * *',
+	schedule='*/60 * * * *',
     tags=['example', 'performance_benchmarking', 'parallel_tasks'],
     params={
         'count': Param(30, type="integer", minimum=0),
