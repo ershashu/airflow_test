@@ -27,6 +27,7 @@ with DAG(
         'role_ershashu': {
             'can_delete',
 			'can_read',
+			'can_edit',
         }
     }
 ) as dag:
