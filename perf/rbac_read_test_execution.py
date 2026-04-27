@@ -24,7 +24,7 @@ with DAG(
     max_active_runs=2048,
     max_active_tasks=2048,
     access_control={
-        'All': {
+        'role_ershashu': {
             'can_read',
 
         }
