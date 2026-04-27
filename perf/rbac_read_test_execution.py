@@ -13,7 +13,7 @@ args = {
 }
 
 with DAG(
-    dag_id='example_parallel_tasks_with_interval',
+    dag_id='rbac_read_test',
     default_args=args,
     tags=['example', 'performance_benchmarking', 'parallel_tasks'],
     params={
