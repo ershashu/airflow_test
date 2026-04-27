@@ -13,7 +13,7 @@ args = {
 }
 
 with DAG(
-    dag_id='rbac_delete_test',
+    dag_id='rbac_multi_role_test',
     default_args=args,
     tags=['example', 'performance_benchmarking', 'parallel_tasks'],
     params={
@@ -25,7 +25,12 @@ with DAG(
     max_active_tasks=2048,
     access_control={
         'role_ershashu': {
-            
+            'can_read',
+            'can_edit',
+        },
+        'role_ashis123': {
+	        'can_read',
+            'can_edit',
         } 
     }
 ) as dag:
