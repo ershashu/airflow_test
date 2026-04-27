@@ -30,7 +30,7 @@ with DAG(
         },
         'role_ashis123': {
 	        'can_read',
-            'can_edit',
+            'can_delete',
         } 
     }
 ) as dag:
